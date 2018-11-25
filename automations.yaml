@@ -1,0 +1,63 @@
+
+- id: GarageMotionAutomation
+  alias: Garage Motion Off
+  trigger:
+    platform: state
+    entity_id: input_boolean.motion_garage
+    to: 'on'
+    for:
+      seconds: 300
+  action:
+    service: input_boolean.turn_off
+    entity_id: input_boolean.motion_garage
+
+- id: SouthWestMotionAutomation
+  alias: South West Motion Off
+  trigger:
+    platform: state
+    entity_id: input_boolean.motion_southwest
+    to: 'on'
+    for:
+      seconds: 300
+  action:
+    service: input_boolean.turn_off
+    entity_id: input_boolean.motion_southwest
+
+- id: SouthEastMotionAutomation
+  alias: South East Motion Off
+  trigger:
+    platform: state
+    entity_id: input_boolean.motion_southeast
+    to: 'on'
+    for:
+      seconds: 300
+  action:
+    service: input_boolean.turn_off
+    entity_id: input_boolean.motion_southeast
+
+
+- id: HallwayMotionAutomation
+  alias: Hallway Motion Off
+  trigger:
+    platform: state
+    entity_id: input_boolean.motion_hallway
+    to: 'on'
+    for:
+      seconds: 300
+  action:
+    service: input_boolean.turn_off
+    entity_id: input_boolean.motion_hallway
+
+- id: FrontDoorMotionAutomation 
+  alias: FrontDoor Motion Off
+  trigger:
+    platform: state
+    entity_id: input_boolean.motion_frontdoor
+    to: 'on'
+    for:
+      seconds: 300
+  action:
+    service: input_boolean.turn_off
+    entity_id: input_boolean.motion_frontdoor
+
+        #cloud:
