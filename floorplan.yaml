@@ -46,6 +46,8 @@
           entities:
             - switch.front_light
             - switch.living_room
+            - light.back_light
+            - light.patio_light
           states:
             - state: 'on'
               class: 'light-on'

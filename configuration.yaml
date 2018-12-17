@@ -180,3 +180,9 @@ emulated_hue:
     light.patio_light:
       name: "Patio Light"
       hidden: false
+
+vacuum:
+  - platform: xiaomi_miio
+    host: 192.168.22.188
+    token: 356c6261713059396468527354427852 
+    name: charlie

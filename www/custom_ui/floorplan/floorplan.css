@@ -97,12 +97,15 @@ svg, svg * {
 
 .light-off {
   fill: none !important;
+  fill-opacity: 0;
+
 }
 
 .light-on {
   fill: #020F36 !important;
   stroke-width: 1px !important;
   stroke-opacity: 1 !important;
+  fill-opacity: 1;
 
 }
 .door-open {
