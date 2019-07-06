@@ -38,13 +38,13 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1842"
+     inkscape:window-width="1814"
      inkscape:window-height="1057"
      id="namedview6396"
      showgrid="false"
      inkscape:zoom="2.4674252"
      inkscape:cx="348.76068"
-     inkscape:cy="196.61797"
+     inkscape:cy="553.26505"
      inkscape:window-x="1672"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -2972,7 +2972,7 @@
     <g
        width="65.333"
        height="45.5"
-       transform="rotate(-90,549.167,172.417)"
+       transform="translate(326.71581,385.90689)"
        id="g4140">
       <g
          width="65.333"
@@ -6146,7 +6146,7 @@
     <g
        width="60"
        height="24"
-       transform="rotate(27.7,-536.16323,935.36509)"
+       transform="matrix(-0.00766021,1.3618683,-0.95970148,-0.01288378,428.74238,640.86081)"
        id="g5914">
       <g
          width="60"
