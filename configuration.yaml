@@ -13,7 +13,7 @@ homeassistant:
   customize: !include customize.yaml
   auth_providers:
     - type: homeassistant
-    - type: legacy_api_password
+      #   - type: legacy_api_password
 
 
 # Show links to resources in log and frontend
@@ -33,7 +33,7 @@ config:
 
 http:
   # Uncomment this to add a password (recommended!)
-  api_password: !secret http_password
+  #api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123 
   #  trusted_networks:
@@ -53,6 +53,7 @@ updater:
 discovery:
   ignore:
     - belkin_wemo
+    - igd
 
 wemo:
   static:
@@ -81,8 +82,8 @@ sensor:
   - platform: yr
 
 # Text to speech
-tts:
-  - platform: google
+#tts:
+#  - platform: google
 
 group: !include groups.yaml
 automation: !include automations.yaml
@@ -180,9 +181,27 @@ emulated_hue:
     light.patio_light:
       name: "Patio Light"
       hidden: false
+    switch.stereo:
+      name: "Stereo"
+      hidden: false
+
+tplink:
+  discovery: true
+  switch:
+    - host: 172.22.22.30
 
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.22.188
+    host: 192.168.22.14
     token: 356c6261713059396468527354427852 
     name: charlie
+
+media_player:
+  - platform: squeezebox
+    host: squirrel.home.our-lan.com
+
+system_health:
+
+camera:
+  - platform: xeoma
+    host: http://vision.home.our-lan.com:10090

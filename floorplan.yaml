@@ -37,6 +37,7 @@
           entities:
              - switch.tv
              - switch.computer
+             - switch.stereo
           states:
              - state: 'on'
                class: 'tv-on'
@@ -48,6 +49,7 @@
             - switch.living_room
             - light.back_light
             - light.patio_light
+            - switch.aeotec_zw116_nano_switch_switch
           states:
             - state: 'on'
               class: 'light-on'
