@@ -36,7 +36,7 @@
         - name: Power_on
           entities:
              - switch.tv
-             - switch.computer
+             - switch.computer_2
              - switch.stereo
           states:
              - state: 'on'

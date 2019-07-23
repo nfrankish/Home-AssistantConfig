@@ -58,7 +58,7 @@ discovery:
 wemo:
   static:
     - 192.168.22.30
-    - 192.168.22.31
+#    - 192.168.22.31
     - 192.168.22.32
     - 192.168.22.33
 
@@ -184,11 +184,15 @@ emulated_hue:
     switch.stereo:
       name: "Stereo"
       hidden: false
+    switch.computer_2:
+      name: "Computer"
+      hidden: false
 
 tplink:
   discovery: true
   switch:
     - host: 172.22.22.30
+    - host: 172.22.22.31
 
 vacuum:
   - platform: xiaomi_miio
