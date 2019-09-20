@@ -32,6 +32,11 @@ frontend:
 config:
 
 http:
+    use_x_forwarded_for: true
+    trusted_proxies:
+     - 192.168.22.1
+    ip_ban_enabled: true
+    login_attempts_threshold: 5
   # Uncomment this to add a password (recommended!)
   #api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
@@ -125,6 +130,14 @@ sensor garage_door:
    name: Garage Door
    value_template: '{{ value_json.State }}'
 
+switch garage_door_ctrl:
+  - platform: rest
+    resource: http://jeeves:8080/
+    name: Garage Door Control
+    is_on_template: '{{ value_json.State == Opened }}'
+    body_on: '{"action": "true"}'
+    body_off: '{"action": "false"}'
+
 panel_custom:
   - name: floorplan
     sidebar_title: Floorplan
@@ -188,6 +201,13 @@ emulated_hue:
       name: "Computer"
       hidden: false
 
+light:
+  - platform: flux_led
+    devices:
+      172.22.22.41:
+        name: Led Strip1
+        mode: rgbw
+
 tplink:
   discovery: true
   switch:
@@ -209,3 +229,59 @@ system_health:
 camera:
   - platform: xeoma
     host: http://vision.home.our-lan.com:10090
+
+switch:
+  - platform: wake_on_lan
+    name: "Office Computer"
+    mac_address: "E0:D5:5E:84:D2:28" 
+    host: 192.168.22.22
+
+envisalink:
+    host: 192.168.22.16
+    user_name: user
+    password: !secret alarmsystem
+    panel_type: DSC
+    evl_version: 4
+    keepalive_interval: 60
+    zonedump_interval: 30
+    timeout: 10
+    partitions: 
+        1:
+            name: "Home Alarm"
+    zones:
+        1: 
+            name: "Hallway"
+            type: 'motion'
+        2:
+            name: "Kitchen"
+            type: "motion"
+        3:
+            name: "Master Bedroom"
+            type: "motion"
+        6:
+            name: "Tamper"
+            type: "opening"
+        5:
+            name: "Smoke Alarm"
+            type: "smoke"
+mqtt:
+    broker: hass.home.our-lan.com
+    discovery: true
+    discovery_prefix: homeassistant
+
+plant:
+    FrontYard:
+        sensors:
+            moisture: sensor.grass_moisture
+            battery: sensor.grass_battery
+            temperature: sensor.grass_temperature
+            brightness: sensor.grass_light
+            conductivity: sensor.grass_conductivity
+    SideYard:
+         sensors:
+             moisture: sensor.sideyard_moisture
+             battery: sensor.sideyard_battery
+             temperature: sensor.sideyard_temperature
+             brightness: sensor.sideyard_light
+             conductivity: sensor.sideyard_conductivity
+
