@@ -285,3 +285,12 @@ plant:
              brightness: sensor.sideyard_light
              conductivity: sensor.sideyard_conductivity
 
+
+homekit:
+    auto_start: false
+    filter:
+        exclude_domains:
+            - device_tracker
+            - medi_player
+            - automation
+
