@@ -93,13 +93,6 @@ sensor:
 group: !include groups.yaml
 automation: !include automations.yaml
 
-device_tracker wifi:
-  - platform: unifi
-    username: homeassistant
-    password: !secret wifi
-    host: wifi
-    verify_ssl: false
-
 sensor power:
   - platform: pvoutput
     system_id: !secret pvoutput_systemid
@@ -180,26 +173,26 @@ zwave:
   network_key: !secret zwave
   polling_interval: 60000
 
-emulated_hue:
-  host_ip: 192.168.22.13
-  listen_port: 80
-  expose_by_default: false
-  entities:
-    switch.aeotec_zw116_nano_switch_switch:
-      name: "Bedroom Light"
-      hidden: false
-    light.back_light:
-      name: "Back light"
-      hidden: false
-    light.patio_light:
-      name: "Patio Light"
-      hidden: false
-    switch.stereo:
-      name: "Stereo"
-      hidden: false
-    switch.computer_2:
-      name: "Computer"
-      hidden: false
+#emulated_hue:
+#  host_ip: 192.168.22.13
+#  listen_port: 80
+#  expose_by_default: false
+#  entities:
+#    switch.aeotec_zw116_nano_switch_switch:
+#      name: "Bedroom Light"
+#      hidden: false
+#    light.back_light:
+#      name: "Back light"
+#      hidden: false
+#    light.patio_light:
+#      name: "Patio Light"
+#      hidden: false
+#    switch.stereo:
+#      name: "Stereo"
+#      hidden: false
+#    switch.computer_2:
+#      name: "Computer"
+#      hidden: false
 
 light:
   - platform: flux_led
@@ -233,7 +226,7 @@ camera:
 switch:
   - platform: wake_on_lan
     name: "Office Computer"
-    mac_address: "E0:D5:5E:84:D2:28" 
+    mac: "E0:D5:5E:84:D2:28" 
     host: 192.168.22.22
 
 envisalink:
@@ -294,3 +287,9 @@ homekit:
             - medi_player
             - automation
 
+alexa:
+  smart_home:
+    filter:
+      include_domains:
+        - switch
+        - light
