@@ -293,3 +293,35 @@ alexa:
       include_domains:
         - switch
         - light
+
+climate:
+      platform: mqtt
+      modes:
+        - "off"
+        - heat
+        - dry
+        - cool
+        - fan_only
+        - auto
+      fan_modes:
+        - "1"
+        - "3"
+      current_temperature_template: "{{ value_json.room_temp }}"
+      temperature_state_template: "{{ value_json.temp }}"
+      fan_mode_state_template: "{{ value_json.fan }}"
+      mode_state_template: >
+        {% if value_json.power == "OFF" %}
+          off
+        {% elif value_json.mode == "FAN" %}
+          fan_only
+        {% else %}
+          {{ value_json.mode|lower }}
+        {% endif %}
+      name: "Home A/C"
+      current_temperature_topic: "heatpump/ducted/state"
+      temperature_command_topic: "heatpump/ducted/_set/temp"
+      temperature_state_topic: "heatpump/ducted/state"
+      fan_mode_command_topic: "heatpump/ducted/_set/fan"
+      fan_mode_state_topic: "heatpump/ducted/state"
+      mode_command_topic: "heatpump/ducted/_set/mode"
+      mode_state_topic: "heatpump/ducted/state"
