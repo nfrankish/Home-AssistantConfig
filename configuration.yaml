@@ -293,6 +293,7 @@ alexa:
       include_domains:
         - switch
         - light
+        - climate
 
 climate:
       platform: mqtt
@@ -309,6 +310,8 @@ climate:
       current_temperature_template: "{{ value_json.room_temp }}"
       temperature_state_template: "{{ value_json.temp }}"
       fan_mode_state_template: "{{ value_json.fan }}"
+      #payload_available: 1
+      #payload_not_available: 0
       mode_state_template: >
         {% if value_json.power == "OFF" %}
           off
@@ -317,8 +320,9 @@ climate:
         {% else %}
           {{ value_json.mode|lower }}
         {% endif %}
-      name: "Home A/C"
+      name: "AirCon"
       current_temperature_topic: "heatpump/ducted/state"
+      #availability_topic: "heatpump/ducted/connected"
       temperature_command_topic: "heatpump/ducted/_set/temp"
       temperature_state_topic: "heatpump/ducted/state"
       fan_mode_command_topic: "heatpump/ducted/_set/fan"
