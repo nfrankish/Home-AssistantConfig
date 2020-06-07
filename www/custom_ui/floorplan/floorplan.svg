@@ -206,6 +206,22 @@
            inkscape:connector-curvature="0" />
       </g>
     </g>
+       <g
+        width="222"
+        height="215.833"
+        transform="translate(500.167,145.667)"
+        id="light.garage_light_switch"
+        style="fill:none;stroke:none">
+       <g
+          id="g6000"
+          style="fill:none;fill-opacity:1;stroke:none;stroke-opacity:1">
+         <path
+            d="M 0,190.837 H 170.005 V 2.656 L 0,0 Z"
+            id="path3002"
+            style="fill:none;stroke:none;stroke-width:1;stroke-dasharray:none"
+            inkscape:connector-curvature="0" />
+       </g>
+     </g> 
     <g
        width="255.5"
        height="111.5"
