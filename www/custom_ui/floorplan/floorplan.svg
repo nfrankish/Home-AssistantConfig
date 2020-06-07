@@ -2847,7 +2847,7 @@
        width="253.667"
        height="7"
        transform="rotate(180,360.5005,62.8335)"
-       id="sensor.garage_door"
+       id="binary_sensor.garage_closed_reed_switch"
        inkscape:label="#g4084">
       <g
          width="253.667"

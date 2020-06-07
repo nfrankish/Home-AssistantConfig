@@ -15,13 +15,13 @@
 
         - name: Door_Sensors
           entities:
-             -  sensor.garage_door
+             - binary_sensor.garage_closed_reed_switch  
           #text_template: '${entity.state ? entity.state : "unknown"}'
           # An example of rounding up a number, i.e. a temperature of 90.1 becomes 91
           states:
-             - state: 'Closed'
+             - state: 'on'
                class: 'door-closed'
-             - state: 'Opened'
+             - state: 'off'
                class: 'door-open'
 
         - name: Car_Sensors
@@ -50,6 +50,7 @@
             - light.back_light
             - light.patio_light
             - switch.aeotec_zw116_nano_switch_switch
+            - light.garage_light_switch
           states:
             - state: 'on'
               class: 'light-on'

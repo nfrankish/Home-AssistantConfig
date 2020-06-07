@@ -33,6 +33,7 @@ config:
 
 http:
     use_x_forwarded_for: true
+    #    external_url: https://ha.itsmy.io
     trusted_proxies:
      - 192.168.22.1
     ip_ban_enabled: true
@@ -63,7 +64,7 @@ discovery:
 wemo:
   static:
     - 192.168.22.30
-#    - 192.168.22.31
+    - 192.168.22.31
     - 192.168.22.32
     - 192.168.22.33
 
@@ -117,19 +118,28 @@ sensor power:
         friendly_name: 'Generated'
         unit_of_measurement: 'kWh'
 
-sensor garage_door:
- - platform: rest
-   resource: http://jeeves:8080/
-   name: Garage Door
-   value_template: '{{ value_json.State }}'
+sensor wemo:
+  - platform: template
+    sensors:
+      laundry_current_consumption:
+        friendly_name: 'Laundry Current Consumption'  
+        unit_of_measurement: 'w'
+        value_template: '{{ states.switch.laundry.attributes["current_power_w"] | round(-1) }}'
 
-switch garage_door_ctrl:
-  - platform: rest
-    resource: http://jeeves:8080/
-    name: Garage Door Control
-    is_on_template: '{{ value_json.State == Opened }}'
-    body_on: '{"action": "true"}'
-    body_off: '{"action": "false"}'
+
+#sensor garage_door:
+# - platform: rest
+#   resource: http://jeeves:8080/
+#   name: Garage Door
+#   value_template: '{{ value_json.State }}'
+
+#switch garage_door_ctrl:
+#  - platform: rest
+#    resource: http://jeeves:8080/
+#    name: Garage Door Control
+#    is_on_template: '{{ value_json.State == Opened }}'
+#    body_on: '{"action": "true"}'
+#    body_off: '{"action": "false"}'
 
 panel_custom:
   - name: floorplan
