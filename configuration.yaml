@@ -220,7 +220,7 @@ tplink:
 vacuum:
   - platform: xiaomi_miio
     host: 192.168.22.14
-    token: 356c6261713059396468527354427852 
+    token: 5a32776b56656d417568754c52763670
     name: charlie
 
 media_player:
@@ -232,6 +232,19 @@ system_health:
 camera:
   - platform: xeoma
     host: http://vision.home.our-lan.com:10090
+    cameras:
+      - image_name: catcam
+        name: Cat Camera
+      - image_name: image0
+        name: Garage Camera
+      - image_name: image1
+        name: Hallway Camera
+      - image_name: image2
+        name: East Camera
+      - image_name: image3
+        name: West Camera
+      - image_name: image4
+        name: Front Door Camera
 
 switch:
   - platform: wake_on_lan

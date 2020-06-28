@@ -1,0 +1,81 @@
+- id: '1592565565988'
+  name: Bed Time
+  entities:
+    cover.garage_door:
+      assumed_state: true
+      device_class: garage
+      friendly_name: Garage Door
+      state: closed
+      supported_features: 11
+    light.east_light:
+      friendly_name: East Light
+      state: 'off'
+      supported_features: 8
+    light.garage_light_switch:
+      friendly_name: Garage Light Switch
+      state: 'off'
+      supported_features: 8
+    light.laundry_light:
+      friendly_name: Laundry Light
+      state: 'off'
+      supported_features: 8
+    light.led_strip1:
+      effect_list:
+      - blue_fade
+      - blue_strobe
+      - colorjump
+      - colorloop
+      - colorstrobe
+      - cyan_fade
+      - cyan_strobe
+      - gb_cross_fade
+      - green_fade
+      - green_strobe
+      - purple_fade
+      - purple_strobe
+      - rb_cross_fade
+      - red_fade
+      - red_strobe
+      - rg_cross_fade
+      - white_fade
+      - white_strobe
+      - yellow_fade
+      - yellow_strobe
+      - random
+      friendly_name: Led Strip1
+      max_mireds: 500
+      min_mireds: 153
+      state: 'off'
+      supported_features: 151
+    light.patio_light_2:
+      friendly_name: Patio Light
+      state: 'off'
+      supported_features: 8
+    light.west_light:
+      friendly_name: West Light
+      state: 'off'
+      supported_features: 8
+    switch.front_light:
+      friendly_name: Front Light
+      state: 'off'
+    switch.living_room:
+      friendly_name: Living Room Light
+      state: 'on'
+    switch.stereo:
+      current_a: '0.02'
+      current_power_w: '0.00'
+      friendly_name: Stereo
+      state: 'off'
+      today_energy_kwh: '0.000'
+      total_energy_kwh: '0.001'
+      voltage: '245.2'
+    switch.tv:
+      current_power_w: 122.285
+      friendly_name: TV
+      on_latest_time: 00d 02h 19m 34s
+      on_today_time: 00d 02h 19m 34s
+      on_total_time: 00d 02h 16m 36s
+      power_threshold_w: 8
+      state: 'on'
+      state_detail: 'on'
+      today_energy_kwh: 0.28
