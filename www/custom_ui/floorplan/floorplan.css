@@ -172,3 +172,20 @@ svg, svg * {
 .squeezebox-on {
   fill: #2baaa6 !important;
 }
+
+.litter-low {
+  fill: #4304c8 !important;
+  fill-opacity: 1 !important;
+}
+.litter-mid {
+  fill: #246982 !important;
+  fill-opacity: 1 !important;
+}
+.litter-high {
+  fill: #1ab8b8 !important;
+  fill-opacity: 1 !important;
+}
+.litter-full {
+  fill: #00ffff !important;
+  fill-opacity: 1 !important;
+}

@@ -50,7 +50,9 @@
             - light.back_light
             - light.patio_light
             - switch.aeotec_zw116_nano_switch_switch
-            - light.garage_light_switch
+            - light.garage_light
+            - light.laundry_light
+            - light.west_light
           states:
             - state: 'on'
               class: 'light-on'
@@ -78,7 +80,31 @@
               class: 'doorbell-on'
             - state: 'off'
               class: 'doorbell-off'
-
+        - name: Water System
+          entities:
+            - switch.zone_1
+          states:
+            - state: 'off'
+              class: 'doorbell-off'
+            - state: 'on'
+              class: 'doorbell-on'
+        - name: Cat sensors
+          entities:
+            - sensor.litter_robot_gizmo_and_gadgets_robot_waste
+          class_template: '
+           var power = parseInt(entity.state);
+             if (power < 10)
+              return "heater-off";
+             if (power < 30)
+              return "litter-low";
+             if (power < 50)
+                return "litter-mid";
+             if (power < 70)
+                return "litter-high";
+             else
+                return "litter-full";
+          '
+          
         - name: NVR
           entities:
              - binary_sensor.blue_iris_nvr

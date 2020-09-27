@@ -11,6 +11,7 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Australia/Brisbane
   customize: !include customize.yaml
+  packages: !include_dir_merge_named packages/
   auth_providers:
     - type: homeassistant
       #   - type: legacy_api_password
@@ -30,7 +31,6 @@ frontend:
 
 # Enables configuration UI
 config:
-
 http:
     use_x_forwarded_for: true
     #    external_url: https://ha.itsmy.io
@@ -59,7 +59,6 @@ updater:
 discovery:
   ignore:
     - belkin_wemo
-    - igd
 
 wemo:
   static:
@@ -223,9 +222,6 @@ vacuum:
     token: 5a32776b56656d417568754c52763670
     name: charlie
 
-media_player:
-  - platform: squeezebox
-    host: squirrel.home.our-lan.com
 
 system_health:
 
@@ -352,3 +348,9 @@ climate:
       fan_mode_state_topic: "heatpump/ducted/state"
       mode_command_topic: "heatpump/ducted/_set/mode"
       mode_state_topic: "heatpump/ducted/state"
+
+litter_robot:
+  username: !secret litter-robot-username
+  password: !secret litter-robot-password
+  scan_interval: 120
+
