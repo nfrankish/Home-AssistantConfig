@@ -225,7 +225,7 @@
       </g>
       <g
          transform="translate(121.333,151.667)"
-         id="switch.front_light"
+         id="light.front_light"
          fill="none">
         <g
            id="g3004"
@@ -4255,7 +4255,7 @@
       <g
          id="g5424">
         <g
-           id="sensor.litter_robot_gizmo_and_gadgets_robot_waste">
+           id="sensor.gizmo_and_gadgets_robot_waste_drawer">
           <g
              transform="matrix(0.139211,0,0,0.13876,498.333,626.667)"
              id="g5428">

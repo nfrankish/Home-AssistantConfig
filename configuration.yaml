@@ -15,6 +15,10 @@ homeassistant:
   auth_providers:
     - type: homeassistant
       #   - type: legacy_api_password
+    - type: trusted_networks
+      trusted_networks:
+          - 192.168.22.22/32
+
 
 
 # Show links to resources in log and frontend
@@ -22,7 +26,6 @@ homeassistant:
 
 # Enables the frontend
 frontend:
-        javascript_version: latest
 
         #emulated_hue:
         #  host_ip: 192.168.22.13
@@ -62,10 +65,7 @@ discovery:
 
 wemo:
   static:
-    - 192.168.22.30
-    - 192.168.22.31
     - 192.168.22.32
-    - 192.168.22.33
 
 
 # Allows you to issue voice commands from the frontend in enabled browsers
@@ -83,8 +83,6 @@ logbook:
 sun:
 
 # Weather prediction
-sensor:
-  - platform: yr
 
 # Text to speech
 #tts:
@@ -117,35 +115,14 @@ sensor power:
         friendly_name: 'Generated'
         unit_of_measurement: 'kWh'
 
-sensor wemo:
-  - platform: template
-    sensors:
-      laundry_current_consumption:
-        friendly_name: 'Laundry Current Consumption'  
-        unit_of_measurement: 'w'
-        value_template: '{{ states.switch.laundry.attributes["current_power_w"] | round(-1) }}'
 
 
-#sensor garage_door:
-# - platform: rest
-#   resource: http://jeeves:8080/
-#   name: Garage Door
-#   value_template: '{{ value_json.State }}'
-
-#switch garage_door_ctrl:
-#  - platform: rest
-#    resource: http://jeeves:8080/
-#    name: Garage Door Control
-#    is_on_template: '{{ value_json.State == Opened }}'
-#    body_on: '{"action": "true"}'
-#    body_off: '{"action": "false"}'
-
-panel_custom:
-  - name: floorplan
-    sidebar_title: Floorplan
-    sidebar_icon: mdi:home
-    url_path: floorplan
-    config: !include floorplan.yaml
+#panel_custom:
+#  - name: floorplan2
+#    sidebar_title: Floorplan
+#    sidebar_icon: mdi:home
+#    url_path: floorplan
+#    config: !include floorplan.yaml
 
 
 input_boolean:
@@ -182,34 +159,6 @@ zwave:
   network_key: !secret zwave
   polling_interval: 60000
 
-#emulated_hue:
-#  host_ip: 192.168.22.13
-#  listen_port: 80
-#  expose_by_default: false
-#  entities:
-#    switch.aeotec_zw116_nano_switch_switch:
-#      name: "Bedroom Light"
-#      hidden: false
-#    light.back_light:
-#      name: "Back light"
-#      hidden: false
-#    light.patio_light:
-#      name: "Patio Light"
-#      hidden: false
-#    switch.stereo:
-#      name: "Stereo"
-#      hidden: false
-#    switch.computer_2:
-#      name: "Computer"
-#      hidden: false
-
-light:
-  - platform: flux_led
-    devices:
-      172.22.22.41:
-        name: Led Strip1
-        mode: rgbw
-
 tplink:
   discovery: true
   switch:
@@ -241,6 +190,8 @@ camera:
         name: West Camera
       - image_name: image4
         name: Front Door Camera
+      - image_name: image72
+        name: Front Camera
 
 switch:
   - platform: wake_on_lan
@@ -349,8 +300,54 @@ climate:
       mode_command_topic: "heatpump/ducted/_set/mode"
       mode_state_topic: "heatpump/ducted/state"
 
-litter_robot:
-  username: !secret litter-robot-username
-  password: !secret litter-robot-password
-  scan_interval: 120
 
+sensor:
+  - platform: smartweatherudp
+    host: 0.0.0.0
+    wind_unit: kmh
+    monitored_conditions:
+      - temperature
+      - dewpoint
+      - feels_like
+      - heat_index
+      - wind_chill
+      - wind_speed
+      - wind_bearing
+      - wind_speed_rapid
+      - wind_bearing_rapid
+      - wind_gust
+      - wind_lull
+      - wind_direction
+      - precipitation
+      - precipitation_rate
+      - humidity
+      - pressure
+      - uv
+      - solar_radiation
+      - illuminance
+      - lightning_count
+      - airbattery
+      - skybattery
+
+input_number:
+    yesterday_rain:
+        name: Yesterday Rain Fall
+        min: 0
+        max: 200
+        step: 0.01
+        unit_of_measurement: "mm"
+        mode: box
+        icon: mdi:weather-rainy
+    2_days_rain:
+        name: 2 days Before Rain Fall
+        min: 0
+        max: 200
+        step: 0.01
+        unit_of_measurement: "mm"
+        mode: box
+        icon: mdi:weather-rainy
+
+influxdb:
+    host: influxdb.home.our-lan.com
+    database: homeassistant
+    max_retries: 100

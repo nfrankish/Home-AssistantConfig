@@ -91,3 +91,21 @@
           {% else %}
             {{ "{" + trigger.topic.split("/")[-1]|tojson + ":" + trigger.payload|tojson + "}" }}
           {% endif %}
+
+- id: 'Automation'
+  alias: 'Log - rainfall'
+  description: ''
+  trigger:
+    - platform: time
+      at: '23:58'
+  condition: []
+  action:
+  - data_template:
+      entity_id: input_number.2_days_rain
+      value: "{{ states('input_number.yesterday_rain') }}"
+    service: input_number.set_value
+  - delay: 00:00:01
+  - data_template:
+      entity_id: input_number.yesterday_rain
+      value: "{{ states('sensor.smartweatherudp_rain_today') }}"
+    service: input_number.set_value
