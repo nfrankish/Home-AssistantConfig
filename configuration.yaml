@@ -192,6 +192,8 @@ camera:
         name: Front Door Camera
       - image_name: image72
         name: Front Camera
+      - image_name: doorbell
+        name: Doorbell Camera
 
 switch:
   - platform: wake_on_lan
