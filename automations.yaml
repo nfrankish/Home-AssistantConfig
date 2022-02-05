@@ -1,4 +1,3 @@
-
 - id: GarageMotionAutomation
   alias: Garage Motion Off
   trigger:
@@ -10,7 +9,6 @@
   action:
     service: input_boolean.turn_off
     entity_id: input_boolean.motion_garage
-
 - id: SouthWestMotionAutomation
   alias: South West Motion Off
   trigger:
@@ -22,7 +20,6 @@
   action:
     service: input_boolean.turn_off
     entity_id: input_boolean.motion_southwest
-
 - id: SouthEastMotionAutomation
   alias: South East Motion Off
   trigger:
@@ -34,8 +31,6 @@
   action:
     service: input_boolean.turn_off
     entity_id: input_boolean.motion_southeast
-
-
 - id: HallwayMotionAutomation
   alias: Hallway Motion Off
   trigger:
@@ -47,8 +42,7 @@
   action:
     service: input_boolean.turn_off
     entity_id: input_boolean.motion_hallway
-
-- id: FrontDoorMotionAutomation 
+- id: FrontDoorMotionAutomation
   alias: FrontDoor Motion Off
   trigger:
     platform: state
@@ -59,53 +53,86 @@
   action:
     service: input_boolean.turn_off
     entity_id: input_boolean.motion_frontdoor
-
-        #cloud:
 - id: StartHomeKit
-  alias: 'Start HomeKit'
+  alias: Start HomeKit
   trigger:
-    - platform: homeassistant
-      event: start
+  - platform: homeassistant
+    event: start
   action:
-    - delay: 00:02  # Waits 5 minutes
-    - service: homekit.start
-
+  - delay: 00:02
+  - service: homekit.start
 - id: CorrectHVAC
-  alias: 'Redirect all MQTT HVAC set commands to the heatpumps'
+  alias: Redirect all MQTT HVAC set commands to the heatpumps
   trigger:
-    - platform: mqtt
-      topic: heatpump/+/_set/+
+  - platform: mqtt
+    topic: heatpump/+/_set/+
   action:
-    - service: mqtt.publish
-      data_template:
-        topic:  '{{ "heatpump/" + trigger.topic.split("/")[1] + "/command/state" }}'
-        payload: >
-          {% if trigger.topic.split("/")[-1] == "mode" %}
-            {% if trigger.payload|upper == "OFF" %}
-              {"power":"OFF"}
-            {% elif trigger.payload == "fan_only" %}
-              {"power":"ON","mode":"FAN"}
-            {% else %}
-              {{ "{\"power\":\"ON\",\"mode\":"|safe + trigger.payload|upper|tojson + "}" }}
-            {% endif %}
-          {% else %}
-            {{ "{" + trigger.topic.split("/")[-1]|tojson + ":" + trigger.payload|tojson + "}" }}
-          {% endif %}
-
-- id: 'Automation'
-  alias: 'Log - rainfall'
+  - service: mqtt.publish
+    data_template:
+      topic: '{{ "heatpump/" + trigger.topic.split("/")[1] + "/command/state" }}'
+      payload: "{% if trigger.topic.split(\"/\")[-1] == \"mode\" %}\n  {% if trigger.payload|upper\
+        \ == \"OFF\" %}\n    {\"power\":\"OFF\"}\n  {% elif trigger.payload == \"\
+        fan_only\" %}\n    {\"power\":\"ON\",\"mode\":\"FAN\"}\n  {% else %}\n   \
+        \ {{ \"{\\\"power\\\":\\\"ON\\\",\\\"mode\\\":\"|safe + trigger.payload|upper|tojson\
+        \ + \"}\" }}\n  {% endif %}\n{% else %}\n  {{ \"{\" + trigger.topic.split(\"\
+        /\")[-1]|tojson + \":\" + trigger.payload|tojson + \"}\" }}\n{% endif %}\n"
+- id: Automation
+  alias: Log - rainfall
   description: ''
   trigger:
-    - platform: time
-      at: '23:58'
+  - platform: time
+    at: '23:58'
   condition: []
   action:
   - data_template:
       entity_id: input_number.2_days_rain
-      value: "{{ states('input_number.yesterday_rain') }}"
+      value: '{{ states(''input_number.yesterday_rain'') }}'
     service: input_number.set_value
   - delay: 00:00:01
   - data_template:
       entity_id: input_number.yesterday_rain
-      value: "{{ states('sensor.smartweatherudp_rain_today') }}"
+      value: '{{ states(''sensor.smartweatherudp_rain_today'') }}'
     service: input_number.set_value
+- id: '1638062304690'
+  alias: Garage Door Open notification
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 6931a883b7714bfea800ba002b14f3f3
+    domain: cover
+    entity_id: cover.garage_door
+    type: opened
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - service: notify.mobile_app_not_nathans_iphone
+    data:
+      message: Garage Door still open
+      title: Garage Door Open
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1
+  mode: single
+- id: '1640472370358'
+  alias: Door Bell Ringing
+  description: ''
+  trigger:
+  - type: sound
+    platform: device
+    device_id: 6ba8043b505dee904a6619372d262bed
+    entity_id: binary_sensor.frontdoorbell_button_pressed
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.mobile_app_not_nathans_iphone
+    data:
+      message: Door Bell Ringing
+      title: Door Bell
+  mode: single

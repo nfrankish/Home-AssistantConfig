@@ -18,6 +18,7 @@ homeassistant:
     - type: trusted_networks
       trusted_networks:
           - 192.168.22.22/32
+  external_url: !secret home_url
 
 
 
@@ -33,13 +34,14 @@ frontend:
         #  listen_port: 80
 
 # Enables configuration UI
+default_config:
 config:
 http:
     use_x_forwarded_for: true
     #    external_url: https://ha.itsmy.io
     trusted_proxies:
      - 192.168.22.1
-    ip_ban_enabled: true
+    ip_ban_enabled: false
     login_attempts_threshold: 5
   # Uncomment this to add a password (recommended!)
   #api_password: !secret http_password
@@ -63,16 +65,17 @@ discovery:
   ignore:
     - belkin_wemo
 
-wemo:
-  static:
-    - 192.168.22.32
-
+mobile_app:
+ios:
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
 # Enables support for tracking state changes over time
 history:
+
+recorder:
+    #  db_url: !secret db_mysql
 
 map:
 
@@ -166,11 +169,6 @@ tplink:
     - host: 172.22.22.31
 
 vacuum:
-  - platform: xiaomi_miio
-    host: 192.168.22.14
-    token: 5a32776b56656d417568754c52763670
-    name: charlie
-
 
 system_health:
 
@@ -194,7 +192,7 @@ camera:
         name: Front Camera
       - image_name: doorbell
         name: Doorbell Camera
-
+energy:
 switch:
   - platform: wake_on_lan
     name: "Office Computer"
@@ -258,6 +256,7 @@ homekit:
             - device_tracker
             - medi_player
             - automation
+            - camera
 
 alexa:
   smart_home:
@@ -266,6 +265,9 @@ alexa:
         - switch
         - light
         - climate
+        - fan
+        - camera
+        - script
 
 climate:
       platform: mqtt
@@ -330,6 +332,28 @@ sensor:
       - lightning_count
       - airbattery
       - skybattery
+  - platform: history_stats
+    name: Cat Rotations Today
+    entity_id: binary_sensor.catwheel
+    state: "off"
+    type: count
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}" 
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Cat Rotations Total
+    entity_id: binary_sensor.catwheel
+    state: "off"
+    type: count
+    start: "{{ 0 }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Cat Rotations Yesterday
+    entity_id: binary_sensor.catwheel
+    state: "off"
+    type: count
+    end: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    duration:
+      hours: 24
 
 input_number:
     yesterday_rain:
@@ -353,3 +377,19 @@ influxdb:
     host: influxdb.home.our-lan.com
     database: homeassistant
     max_retries: 100
+
+scene: !include scenes.yaml
+script: !include scripts.yaml
+
+webostv:
+    host: 192.168.22.247
+    name: LG TV
+    turn_on_action:
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: "b0:37:95:de:4c:82"
+    customize:
+      sources:
+        - Plex
+        - Apple TV
+        - Netflix

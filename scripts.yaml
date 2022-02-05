@@ -1,0 +1,46 @@
+tv_time:
+  alias: TV Time
+  sequence:
+  - type: turn_on
+    device_id: 8bc5a92c83f74ab08a1936663199373c
+    entity_id: switch.tv
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: remote.send_command
+    target:
+      entity_id: remote.livingroomir_remote
+    data:
+      device: amplifier
+      command: power
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: remote.send_command
+    target:
+      entity_id: remote.livingroomir_remote
+    data:
+      device: amplifer
+      command: volume up
+      num_repeats: 15
+  mode: single
+test:
+  alias: test
+  sequence:
+  - type: turn_on
+    device_id: 8bc5a92c83f74ab08a1936663199373c
+    entity_id: switch.tv
+    domain: switch
+  mode: single
+movie_time:
+  alias: Movie time
+  sequence:
+  - service: notify.mobile_app_not_nathans_iphone
+    data:
+      message: test test
+  mode: single
